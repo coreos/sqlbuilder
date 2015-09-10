@@ -5,7 +5,7 @@
 [![Build Status](https://api.travis-ci.org/coreos/sqlbuilder.svg?branch=master)](https://travis-ci.org/coreos/sqlbuilder)
 
 A library for composing SQL queries that supports multiple database dialects.
-This library is originally forked from a package in [godropbox](https://github.com/dropbox/godropbox).
+This library is originally forked from a package in [godropbox](https://github.com/dropbox/godropbox) and contains lots of non-idiomatic code.
 
 **WARNING**: This is alpha software and is undergoing development that will likely break the API.
 

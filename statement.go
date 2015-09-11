@@ -7,6 +7,12 @@ import (
 	"regexp"
 )
 
+// ErrColumnCountInUnionInnerSelect represents a sanity check. If you get this
+// error, you probably want to select the same table columns in the same order.
+// If you are selecting a multiple tables, use Null to pad to the right number
+// of fields.
+var ErrColumnCountInUnionInnerSelect = errors.New("all inner selects in Union statement must select the same number of columns")
+
 type Statement interface {
 	// String returns generated SQL as string, adding a database name to table names.
 	String(d Dialect) (sql string, err error)
@@ -188,9 +194,7 @@ func (us *unionStatementImpl) String(d Dialect) (sql string, err error) {
 			projections = statementImpl.projections
 		} else {
 			if len(projections) != len(statementImpl.projections) {
-				return "", errors.New("all inner selects in Union statement must select the same number of columns. " +
-					"For sanity, you probably want to select the same table columns in the same order. " +
-					"If you are selecting on multiple tables, use Null to pad to the right number of fields.")
+				return "", ErrColumnCountInUnionInnerSelect
 			}
 		}
 	}

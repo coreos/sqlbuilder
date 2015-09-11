@@ -600,13 +600,10 @@ func (s *StmtSuite) TestUnionSelectWithMismatchedColumns(c *gc.C) {
 
 	c.Assert(err, gc.NotNil)
 	c.Assert(
-		err.Error(),
+		err,
 		gc.Equals,
-		"all inner selects in Union statement must select the "+
-			"same number of columns.  For sanity, you probably "+
-			"want to select the same table columns in the same "+
-			"order.  If you are selecting on multiple tables, "+
-			"use Null to pad to the right number of fields.")
+		ErrColumnCountInUnionInnerSelect,
+	)
 }
 
 func (s *StmtSuite) TestComplicatedUnionSelectWithWhereStatement(c *gc.C) {

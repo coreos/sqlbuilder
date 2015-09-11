@@ -1,3 +1,8 @@
+// Copyright 2015 CoreOS, Inc. All rights reserved.
+// Copyright 2014 Dropbox, Inc. All rights reserved.
+// Use of this source code is governed by the BSD 3-Clause license,
+// which can be found in the LICENSE file.
+
 // A library for generating SQL programmatically.
 //
 // Known limitations for SELECT queries:

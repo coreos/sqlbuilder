@@ -59,11 +59,11 @@ func (c literalExpression) SerializeSql(d Dialect, out *bytes.Buffer) error {
 
 func serializeClauses(clauses []Clause, separator []byte, d Dialect, out *bytes.Buffer) (err error) {
 	if clauses == nil || len(clauses) == 0 {
-		return fmt.Errorf("Empty clauses.  Generated sql: %s", out.String())
+		return fmt.Errorf("Empty clauses. Generated sql: %s", out.String())
 	}
 
 	if clauses[0] == nil {
-		return fmt.Errorf("nil clause.  Generated sql: %s", out.String())
+		return fmt.Errorf("nil clause. Generated sql: %s", out.String())
 	}
 	if err = clauses[0].SerializeSql(d, out); err != nil {
 		return
@@ -73,7 +73,7 @@ func serializeClauses(clauses []Clause, separator []byte, d Dialect, out *bytes.
 		out.Write(separator)
 
 		if c == nil {
-			return fmt.Errorf("nil clause.  Generated sql: %s", out.String())
+			return fmt.Errorf("nil clause. Generated sql: %s", out.String())
 		}
 		if err = c.SerializeSql(d, out); err != nil {
 			return
@@ -94,7 +94,7 @@ type conjunctExpression struct {
 func (conj *conjunctExpression) SerializeSql(d Dialect, out *bytes.Buffer) (err error) {
 	if len(conj.expressions) == 0 {
 		return fmt.Errorf(
-			"Empty conjunction.  Generated sql: %s",
+			"Empty conjunction. Generated sql: %s",
 			out.String())
 	}
 
@@ -129,7 +129,7 @@ type arithmeticExpression struct {
 func (arith *arithmeticExpression) SerializeSql(d Dialect, out *bytes.Buffer) (err error) {
 	if len(arith.expressions) == 0 {
 		return fmt.Errorf(
-			"Empty arithmetic expression.  Generated sql: %s",
+			"Empty arithmetic expression. Generated sql: %s",
 			out.String())
 	}
 
@@ -212,7 +212,7 @@ func (c *negateExpression) SerializeSql(d Dialect, out *bytes.Buffer) (err error
 	out.WriteString("NOT (")
 
 	if c.nested == nil {
-		return fmt.Errorf("nil nested.  Generated sql: %s", out.String())
+		return fmt.Errorf("nil nested. Generated sql: %s", out.String())
 	}
 	if err = c.nested.SerializeSql(d, out); err != nil {
 		return
@@ -238,7 +238,7 @@ type binaryExpression struct {
 
 func (c *binaryExpression) SerializeSql(d Dialect, out *bytes.Buffer) (err error) {
 	if c.lhs == nil {
-		return fmt.Errorf("nil lhs.  Generated sql: %s", out.String())
+		return fmt.Errorf("nil lhs. Generated sql: %s", out.String())
 	}
 	if err = c.lhs.SerializeSql(d, out); err != nil {
 		return
@@ -247,7 +247,7 @@ func (c *binaryExpression) SerializeSql(d Dialect, out *bytes.Buffer) (err error
 	out.Write(c.operator)
 
 	if c.rhs == nil {
-		return fmt.Errorf("nil rhs.  Generated sql: %s", out.String())
+		return fmt.Errorf("nil rhs. Generated sql: %s", out.String())
 	}
 	if err = c.rhs.SerializeSql(d, out); err != nil {
 		return
@@ -280,7 +280,7 @@ type funcExpression struct {
 func (c *funcExpression) SerializeSql(d Dialect, out *bytes.Buffer) (err error) {
 	if !validIdentifierName(c.funcName) {
 		return fmt.Errorf(
-			"Invalid function name: %s.  Generated sql: %s",
+			"Invalid function name: %s. Generated sql: %s",
 			c.funcName,
 			out.String())
 	}
@@ -348,7 +348,7 @@ func Like(lhs, rhs Expression) BoolExpression {
 }
 
 func LikeL(lhs Expression, val string) BoolExpression {
-	return Like(lhs, Literal(val))
+	return Like(lhs, Literal([]byte(val)))
 }
 
 // Returns a representation of "c[0] + ... + c[n-1]" for c in clauses
@@ -509,7 +509,7 @@ func (c *inExpression) SerializeSql(d Dialect, out *bytes.Buffer) error {
 
 	if c.lhs == nil {
 		return fmt.Errorf(
-			"lhs of in expression is nil.  Generated sql: %s",
+			"lhs of in expression is nil. Generated sql: %s",
 			out.String(),
 		)
 	}

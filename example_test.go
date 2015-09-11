@@ -37,5 +37,5 @@ func Example() {
 	join := t2.LeftJoinOn(t1, sb.Eq(ns_id1, ns_id2))
 	q := join.Select(ns_id2, sjid, prefix, filename).Where(
 		sb.And(sb.EqL(ns_id2, 123), sb.In(sjid, in)))
-	fmt.Println(q.String("shard1"))
+	fmt.Println(q.String(sb.NewSQLiteDialect()))
 }

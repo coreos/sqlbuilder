@@ -79,7 +79,7 @@ func (s *ExprSuite) TestLikeExpr(c *gc.C) {
 	c.Assert(err, gc.IsNil)
 
 	sql := buf.String()
-	c.Assert(sql, gc.Equals, "`table1`.`col1` LIKE '\\%my\\_prefix%'")
+	c.Assert(sql, gc.Equals, "`table1`.`col1` LIKE '\\\\%my\\\\_prefix%'")
 }
 
 func (s *ExprSuite) TestAndExpr(c *gc.C) {
